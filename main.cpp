@@ -48,6 +48,11 @@ void simpleExample()
     pq.enqueue("e", 4);
     pq.enqueue("f", 2);
 
+    /////////
+    // My code, remove later
+    /////////
+    pq.deqeue();
+    pq.debug();
     // Example of using the iterator with an std::algorithm, isn't that cool!
     // Find the first value "less than d"
     //     auto f = std::find_if(pq.begin(), pq.end(), [](auto value) { return value.value < "d"; });
