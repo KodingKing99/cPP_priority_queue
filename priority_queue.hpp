@@ -43,6 +43,7 @@ namespace usu
             { // removing from empty heap
                 throw std::runtime_error("heap is empty");
             }
+            std::cout << "Deqeueing" << std::endl;
             // Swap maximum with last value
             swapItems(0, m_items.size() - 1);
             siftdown(0); // put new root in correct place
@@ -50,6 +51,7 @@ namespace usu
             m_items.resize(m_items.size() - 1); // truncate array
             return returnPair;                  // return the pair that was at the end of the array;
         }
+        bool empty() { return m_items.size() == 0; }
         void buildheap()
         {
             for (auto i = m_items.size() / 2 - 1; i >= 0; i--)

@@ -31,50 +31,50 @@ void reportPQ(std::string title, usu::priority_queue<T>& pq)
     }
 }
 
-// TEST(MemberMethods, AddItems)
-// {
-//     usu::priority_queue<std::string> pq;
-//     EXPECT_EQ(pq.size(), 0);
-//     EXPECT_EQ(pq.empty(), true);
+TEST(MemberMethods, AddItems)
+{
+    usu::priority_queue<std::string> pq;
+    EXPECT_EQ(pq.size(), 0);
+    EXPECT_EQ(pq.empty(), true);
 
-//     pq.enqueue("a", 1);
-//     EXPECT_EQ(pq.size(), 1);
-//     EXPECT_EQ(pq.empty(), false);
-//     EXPECT_EQ((*pq.begin()).value, "a");
-//     EXPECT_EQ((*pq.begin()).priority, 1u);
+    pq.enqueue("a", 1);
+    EXPECT_EQ(pq.size(), 1);
+    EXPECT_EQ(pq.empty(), false);
+    //     EXPECT_EQ((*pq.begin()).value, "a");
+    //     EXPECT_EQ((*pq.begin()).priority, 1u);
 
-//     pq.enqueue("b", 2);
-//     EXPECT_EQ(pq.size(), 2);
-//     EXPECT_EQ(pq.empty(), false);
-//     EXPECT_EQ((*pq.begin()).value, "b");
-//     EXPECT_EQ((*pq.begin()).priority, 2u);
+    //     pq.enqueue("b", 2);
+    //     EXPECT_EQ(pq.size(), 2);
+    //     EXPECT_EQ(pq.empty(), false);
+    //     EXPECT_EQ((*pq.begin()).value, "b");
+    //     EXPECT_EQ((*pq.begin()).priority, 2u);
 
-//     pq.enqueue("c", 3);
-//     EXPECT_EQ(pq.size(), 3);
-//     EXPECT_EQ(pq.empty(), false);
-//     EXPECT_EQ((*pq.begin()).value, "c");
-//     EXPECT_EQ((*pq.begin()).priority, 3u);
+    //     pq.enqueue("c", 3);
+    //     EXPECT_EQ(pq.size(), 3);
+    //     EXPECT_EQ(pq.empty(), false);
+    //     EXPECT_EQ((*pq.begin()).value, "c");
+    //     EXPECT_EQ((*pq.begin()).priority, 3u);
 
-//     pq.enqueue("d", 1);
-//     EXPECT_EQ(pq.size(), 4);
-//     EXPECT_EQ(pq.empty(), false);
-//     EXPECT_EQ((*pq.begin()).value, "c");
-//     EXPECT_EQ((*pq.begin()).priority, 3u);
+    //     pq.enqueue("d", 1);
+    //     EXPECT_EQ(pq.size(), 4);
+    //     EXPECT_EQ(pq.empty(), false);
+    //     EXPECT_EQ((*pq.begin()).value, "c");
+    //     EXPECT_EQ((*pq.begin()).priority, 3u);
 
-//     pq.enqueue("e", 4);
-//     EXPECT_EQ(pq.size(), 5);
-//     EXPECT_EQ(pq.empty(), false);
-//     EXPECT_EQ((*pq.begin()).value, "e");
-//     EXPECT_EQ((*pq.begin()).priority, 4u);
+    //     pq.enqueue("e", 4);
+    //     EXPECT_EQ(pq.size(), 5);
+    //     EXPECT_EQ(pq.empty(), false);
+    //     EXPECT_EQ((*pq.begin()).value, "e");
+    //     EXPECT_EQ((*pq.begin()).priority, 4u);
 
-//     pq.enqueue("f", 2);
-//     EXPECT_EQ(pq.size(), 6);
-//     EXPECT_EQ(pq.empty(), false);
-//     EXPECT_EQ((*pq.begin()).value, "e");
-//     EXPECT_EQ((*pq.begin()).priority, 4u);
+    //     pq.enqueue("f", 2);
+    //     EXPECT_EQ(pq.size(), 6);
+    //     EXPECT_EQ(pq.empty(), false);
+    //     EXPECT_EQ((*pq.begin()).value, "e");
+    //     EXPECT_EQ((*pq.begin()).priority, 4u);
 
-//     reportPQ("--- After Add Items ---", pq);
-// }
+    //     reportPQ("--- After Add Items ---", pq);
+}
 
 // TEST(MemberMethods, Misc)
 // {
