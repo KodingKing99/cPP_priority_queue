@@ -7,16 +7,13 @@ namespace usu
     template <typename T, typename P = unsigned int>
     class priority_queue
     {
-        using priority_type = P;
-        using size_type = std::size_t;
-
-      private:
-        std::vector<std::pair<T, priority_type>> m_items;
-        std::size_t r_storage;
-
       public:
+        using priority_type = P;
+        using value_type = T;
+        using size_type = std::size_t;
         priority_queue() :
             m_items({}), r_storage(0) {}
+        priority_queue(const std::initializer_list<std::pair<value_type, priority_type>>& list);
         void enqueue(T value, priority_type priority)
         {
             std::cout << "Pushing back item with value " << value << " and priority " << priority << std::endl;
@@ -52,6 +49,20 @@ namespace usu
             return returnPair;                  // return the pair that was at the end of the array;
         }
         bool empty() { return m_items.size() == 0; }
+
+        size_type size() { return m_items.size(); }
+        void debug()
+        {
+            std::cout << " --- m_items --- " << std::endl;
+            for (auto item : m_items)
+            {
+                std::cout << "( " << item.first << " , " << item.second << " )" << std::endl;
+            }
+        }
+
+      private:
+        std::vector<std::pair<T, priority_type>> m_items;
+        std::size_t r_storage;
         void buildheap()
         {
             for (auto i = m_items.size() / 2 - 1; i >= 0; i--)
@@ -83,13 +94,13 @@ namespace usu
         };
         bool isLeaf(int pos)
         {
-            return (pos >= m_items.size() / 2) && (pos < m_items.size());
+            return (static_cast<size_type>(pos) >= m_items.size() / 2) && (static_cast<size_type>(pos) < m_items.size());
         }
 
         // Return position for left child of pos
         int leftchild(int pos)
         {
-            if (pos >= m_items.size() / 2)
+            if (static_cast<size_type>(pos) >= m_items.size() / 2)
             {
                 return -1;
             }
@@ -99,7 +110,7 @@ namespace usu
         // Return position for right child of pos
         int rightchild(int pos)
         {
-            if (pos >= (m_items.size() - 1) / 2)
+            if (static_cast<size_type>(pos) >= (m_items.size() - 1) / 2)
             {
                 return -1;
             }
@@ -127,15 +138,20 @@ namespace usu
             m_items[pos1] = m_items[pos2];
             m_items[pos2] = temp;
         }
-        void debug()
-        {
-            std::cout << " --- m_items --- " << std::endl;
-            for (auto item : m_items)
-            {
-                std::cout << "( " << item.first << " , " << item.second << " )" << std::endl;
-            }
-        }
-        size_type size() { return m_items.size(); }
     };
+    template <typename T, typename P>
+    priority_queue<T, P>::priority_queue(const std::initializer_list<std::pair<value_type, priority_type>>& list)
+    {
+        if (list.size() > this->size())
+        {
+            throw std::runtime_error("Initializer list contains too many elements");
+        }
+        // unsigned int pos = 0;
+        for (auto i = list.begin(); i != list.end(); i++)
+        {
+            // enqueue(i*);
+            this->enqueue(i->first, i->second);
+        }
+    }
 
 } // namespace usu
