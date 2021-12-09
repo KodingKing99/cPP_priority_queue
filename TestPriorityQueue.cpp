@@ -40,8 +40,8 @@ TEST(MemberMethods, AddItems)
     pq.enqueue("a", 1);
     EXPECT_EQ(pq.size(), 1);
     EXPECT_EQ(pq.empty(), false);
-    //     EXPECT_EQ((*pq.begin()).value, "a");
-    //     EXPECT_EQ((*pq.begin()).priority, 1u);
+    // EXPECT_EQ((*pq.begin()).first, "a");
+    // EXPECT_EQ((*pq.begin()).second, 1u);
 
     //     pq.enqueue("b", 2);
     //     EXPECT_EQ(pq.size(), 2);

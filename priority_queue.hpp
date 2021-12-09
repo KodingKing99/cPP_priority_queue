@@ -11,6 +11,49 @@ namespace usu
         using priority_type = P;
         using value_type = T;
         using size_type = std::size_t;
+        using pointer = std::pair<T, P>*;
+        using reference = std::pair<T, P>&;
+        class iterator
+        {
+            using iterator_category = std::forward_iterator_tag;
+
+          public:
+            iterator() :
+                iterator(nullptr) // DefaultConstructable
+            {
+            }
+            iterator(pointer ptr) :
+                m_pos(0),
+                m_data_item(ptr)
+            {
+            }
+            iterator(size_type pos, pointer ptr) :
+                m_pos(pos),
+                m_data_item(ptr) {}
+            iterator(const iterator& obj);            // CopyConstructable
+            iterator(iterator&& obj) noexcept;        // CopyConstructable, MoveConstructable
+            iterator& operator=(const iterator& rhs); // CopyAssignable
+            iterator& operator=(iterator&& rhs);      // CopyAssignable, MoveAssignable
+            bool operator==(const iterator& rhs) { return m_pos == rhs.m_pos; }
+            bool operator!=(const iterator& rhs) { return m_pos != rhs.m_pos; }
+            iterator operator++();    // incrementable e.g., ++r
+            iterator operator++(int); // incrementable e.g., r++
+            reference operator*() { return m_data_item[m_pos]; }
+
+          private:
+            size_type m_pos;
+            pointer m_data_item;
+        };
+        class mypair
+        {
+          public:
+            mypair(value_type v, priority_type p) :
+                value(v), priority(p) {}
+            mypair(std::pair<value_type, priority_type> pair) :
+                value(pair.first), priority(pair.second) {}
+            value_type value;
+            priority_type priority;
+        };
         priority_queue() :
             m_items({}), r_storage(0) {}
         priority_queue(const std::initializer_list<std::pair<value_type, priority_type>>& list);
@@ -24,7 +67,8 @@ namespace usu
             // Change to iterator end here
             auto curr = m_items.size();
             // Start at end of heap
-            m_items.insert(m_items.end(), std::make_pair(value, priority));
+            // m_items.insert(m_items.end(), std::make_pair(value, priority));
+            m_items.insert(m_items.end(), mypair(value, priority));
 
             // Now sift up until curr's parent's key > curr's key
             while ((curr != 0) && (compareTo(curr, parent(curr)) > 0))
@@ -34,7 +78,8 @@ namespace usu
             }
             debug();
         };
-        std::pair<T, priority_type> deqeue()
+        // std::pair<T, priority_type> deqeue()
+        mypair deqeue()
         {
             if (m_items.size() == 0)
             { // removing from empty heap
@@ -56,12 +101,15 @@ namespace usu
             std::cout << " --- m_items --- " << std::endl;
             for (auto item : m_items)
             {
-                std::cout << "( " << item.first << " , " << item.second << " )" << std::endl;
+                std::cout << "( " << item.value << " , " << item.priority << " )" << std::endl;
             }
         }
+        iterator begin() { return iterator(m_items); }
+        iterator end() { return iterator(m_items.size(), m_items); }
 
       private:
-        std::vector<std::pair<T, priority_type>> m_items;
+        // std::vector<std::pair<T, priority_type>> m_items;
+        std::vector<mypair> m_items;
         std::size_t r_storage;
         void buildheap()
         {
@@ -153,5 +201,48 @@ namespace usu
             this->enqueue(i->first, i->second);
         }
     }
-
+    template <typename T, typename P>
+    priority_queue<T, P>::iterator::iterator(const iterator& obj)
+    {
+        this->m_data_item = obj->m_data_item;
+        this->m_pos = obj->m_pos;
+    }
+    template <typename T, typename P>
+    priority_queue<T, P>::iterator::iterator(iterator&& obj) noexcept
+    {
+        this->m_data_item = obj->m_data_item;
+        this->m_pos = obj->m_pos;
+        obj->m_data_item = nullptr;
+        obj->m_pos = 0;
+    }
+    template <typename T, typename P>
+    typename priority_queue<T, P>::iterator& priority_queue<T, P>::iterator::operator=(const iterator& rhs)
+    {
+        this->m_data_item = rhs->m_data_item;
+        this->m_pos = rhs->m_pos;
+        return *this;
+    }
+    template <typename T, typename P>
+    typename priority_queue<T, P>::iterator& priority_queue<T, P>::iterator::operator=(iterator&& rhs)
+    {
+        if (this != rhs)
+        {
+            std::swap(this->m_data_item, rhs.m_data_item);
+            std::swap(this->m_pos, rhs.m_pos);
+        }
+        return *this;
+    }
+    template <typename T, typename P>
+    typename priority_queue<T, P>::iterator priority_queue<T, P>::iterator::operator++()
+    {
+        m_pos++;
+        return *this;
+    }
+    template <typename T, typename P>
+    typename priority_queue<T, P>::iterator priority_queue<T, P>::iterator::operator++(int)
+    {
+        iterator i = *this;
+        m_pos++;
+        return i;
+    }
 } // namespace usu
