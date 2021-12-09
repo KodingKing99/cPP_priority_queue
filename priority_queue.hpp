@@ -49,6 +49,8 @@ namespace usu
           public:
             mypair(value_type v, priority_type p) :
                 value(v), priority(p) {}
+            mypair() :
+                mypair(0, 0) {}
             mypair(std::pair<value_type, priority_type> pair) :
                 value(pair.first), priority(pair.second) {}
             value_type value;
@@ -177,7 +179,7 @@ namespace usu
         bool compareTo(int pos1, int pos2)
         {
             // std::cout << "comparing " << m_items[pos1].second << " with " << m_items[pos2].second << std::endl;
-            return m_items[pos1].second > m_items[pos2].second;
+            return m_items[pos1].priority > m_items[pos2].priority;
         }
         void swapItems(int pos1, int pos2)
         {
