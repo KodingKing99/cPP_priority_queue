@@ -74,7 +74,7 @@ namespace usu
         priority_queue(const std::initializer_list<std::pair<value_type, priority_type>>& list);
         void enqueue(T value, priority_type priority)
         {
-            std::cout << "Pushing back item with value " << value << " and priority " << priority << std::endl;
+            // std::cout << "Pushing back item with value " << value << " and priority " << priority << std::endl;
             // if (m_items.size() >= r_storage) {
             //     System.out.println("Heap is full");
             //     return;
@@ -92,24 +92,24 @@ namespace usu
                 swapItems(curr, parent(curr));
                 curr = parent(curr);
             }
-            debug();
+            // debug();
         };
         // std::pair<T, priority_type> deqeue()
         mypair dequeue()
         {
             if (m_items.size() == 0)
             { // removing from empty heap
-                throw std::runtime_error("heap is empty");
+                throw "heap is empty!";
             }
-            std::cout << "Deqeueing" << std::endl;
+            // std::cout << "Deqeueing" << std::endl;
             // Swap maximum with last value
             swapItems(0, m_items.size() - 1);
-            std::cout << "after swap " << std::endl;
-            debug();
+            // std::cout << "after swap " << std::endl;
+            // debug();
             auto returnPair = m_items[m_items.size() - 1];
             m_items.resize(m_items.size() - 1); // truncate array
             siftdown(0);                        // put new root in correct place
-            std::cout << "returning max value pair: ( " << returnPair.value << " , " << returnPair.priority << " ) " << std::endl;
+            // std::cout << "returning max value pair: ( " << returnPair.value << " , " << returnPair.priority << " ) " << std::endl;
             return returnPair; // return the pair that was at the end of the array;
         }
         iterator find(T value)
@@ -119,7 +119,7 @@ namespace usu
                 // std::cout << "in counted for loop" << (*i).value << std::endl;
                 if ((*i).value == value)
                 {
-                    std::cout << "found the value " << (*i).value << std::endl;
+                    // std::cout << "found the value " << (*i).value << std::endl;
                     return i;
                 }
             }
@@ -177,7 +177,7 @@ namespace usu
                 swapItems(pos, j);
                 pos = j; // Move down
             }
-            debug();
+            // debug();
         };
         bool isLeaf(int pos)
         {
@@ -243,10 +243,11 @@ namespace usu
     template <typename T, typename P>
     priority_queue<T, P>::priority_queue(const std::initializer_list<std::pair<value_type, priority_type>>& list)
     {
-        if (list.size() > this->size())
-        {
-            throw std::runtime_error("Initializer list contains too many elements");
-        }
+
+        // if (list.size() > size())
+        // {
+        //     throw "Initializer list contains too many elements";
+        // }
         // unsigned int pos = 0;
         for (auto i = list.begin(); i != list.end(); i++)
         {

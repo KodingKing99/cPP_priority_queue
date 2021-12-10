@@ -31,7 +31,7 @@ void simulation();
 int main()
 {
     simpleExample();
-    //simulation();
+    simulation();
 
     return 0;
 }
@@ -94,40 +94,41 @@ void simpleExample()
     reportPQ("--- Initialized from std::initializer_list ---", pq2);
 }
 
-// void simulation()
-// {
-//     auto nextName = 1u; // The next "name" of the item to add to the pq
-//     usu::priority_queue<unsigned int, double> pq;
+void simulation()
+{
+    std::cout << "in sim" << std::endl;
+    auto nextName = 1u; // The next "name" of the item to add to the pq
+    usu::priority_queue<unsigned int, double> pq;
 
-//     // Initially generate a hundred items, with normally distributed priority
-//     std::random_device rd;
-//     std::mt19937 generator(rd());
-//     std::normal_distribution<float> distribution(300.0f, 50.0f);
+    // Initially generate a hundred items, with normally distributed priority
+    std::random_device rd;
+    std::mt19937 generator(rd());
+    std::normal_distribution<float> distribution(300.0f, 50.0f);
 
-//     for (auto i = 1u; i <= 100u; i++)
-//     {
-//         auto priority = distribution(generator);
-//         pq.enqueue(nextName++, priority);
-//     }
+    for (auto i = 1u; i <= 100u; i++)
+    {
+        auto priority = distribution(generator);
+        pq.enqueue(nextName++, priority);
+    }
 
-//     // Randomly choose an item in the pq boost it to the top and pull it off
-//     while (!pq.empty())
-//     {
-//         auto priorityMin = distribution(generator);
-//         auto priorityMax = distribution(generator);
-//         if (priorityMin > priorityMax)
-//         {
-//             std::swap(priorityMin, priorityMax);
-//         }
-//         auto boostMe = std::find_if(pq.begin(), pq.end(), [=](auto item) { return item.priority >= priorityMin && item.priority <= priorityMax; });
-//         if (boostMe != pq.end())
-//         {
-//             std::cout << "Remaining highest priority: " << pq.begin()->value << "(" << pq.begin()->priority << ")" << std::endl;
-//             std::cout << "boosted and removed..." << std::endl;
-//             std::cout << "\tbefore : " << boostMe->value << "(" << boostMe->priority << ")" << std::endl;
-//             pq.update(boostMe, (*pq.begin()).priority + 1);
-//             auto top = pq.dequeue();
-//             std::cout << "\tafter  : " << top.value << "(" << top.priority << ")" << std::endl;
-//         }
-//     }
-// }
+    // Randomly choose an item in the pq boost it to the top and pull it off
+    while (!pq.empty())
+    {
+        auto priorityMin = distribution(generator);
+        auto priorityMax = distribution(generator);
+        if (priorityMin > priorityMax)
+        {
+            std::swap(priorityMin, priorityMax);
+        }
+        auto boostMe = std::find_if(pq.begin(), pq.end(), [=](auto item) { return item.priority >= priorityMin && item.priority <= priorityMax; });
+        if (boostMe != pq.end())
+        {
+            std::cout << "Remaining highest priority: " << pq.begin()->value << "(" << pq.begin()->priority << ")" << std::endl;
+            std::cout << "boosted and removed..." << std::endl;
+            std::cout << "\tbefore : " << boostMe->value << "(" << boostMe->priority << ")" << std::endl;
+            pq.update(boostMe, (*pq.begin()).priority + 1);
+            auto top = pq.dequeue();
+            std::cout << "\tafter  : " << top.value << "(" << top.priority << ")" << std::endl;
+        }
+    }
+}
