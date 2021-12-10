@@ -11,8 +11,21 @@ namespace usu
         using priority_type = P;
         using value_type = T;
         using size_type = std::size_t;
-        using pointer = std::pair<T, P>*;
-        using reference = std::pair<T, P>&;
+        class mypair
+        {
+          public:
+            mypair(value_type v, priority_type p) :
+                value(v), priority(p) {}
+            mypair() :
+                mypair(0, 0) {}
+            mypair(std::pair<value_type, priority_type> pair) :
+                value(pair.first), priority(pair.second) {}
+            value_type value;
+            priority_type priority;
+        };
+
+        using pointer = mypair*;
+        using reference = mypair&;
         class iterator
         {
             using iterator_category = std::forward_iterator_tag;
@@ -39,23 +52,13 @@ namespace usu
             iterator operator++();    // incrementable e.g., ++r
             iterator operator++(int); // incrementable e.g., r++
             reference operator*() { return m_data_item[m_pos]; }
+            pointer operator->() { return m_data_item; }
 
           private:
             size_type m_pos;
             pointer m_data_item;
         };
-        class mypair
-        {
-          public:
-            mypair(value_type v, priority_type p) :
-                value(v), priority(p) {}
-            mypair() :
-                mypair(0, 0) {}
-            mypair(std::pair<value_type, priority_type> pair) :
-                value(pair.first), priority(pair.second) {}
-            value_type value;
-            priority_type priority;
-        };
+
         priority_queue() :
             m_items({}), r_storage(0) {}
         priority_queue(const std::initializer_list<std::pair<value_type, priority_type>>& list);
@@ -70,6 +73,7 @@ namespace usu
             auto curr = m_items.size();
             // Start at end of heap
             // m_items.insert(m_items.end(), std::make_pair(value, priority));
+            // mypair* m = new mypair(value, priority);
             m_items.insert(m_items.end(), mypair(value, priority));
 
             // Now sift up until curr's parent's key > curr's key
@@ -106,9 +110,18 @@ namespace usu
                 std::cout << "( " << item.value << " , " << item.priority << " )" << std::endl;
             }
         }
-        iterator begin() { return iterator(m_items); }
-        iterator end() { return iterator(m_items.size(), m_items); }
+        iterator begin()
+        {
+            // auto i = m_items.begin();
+            // auto begin = m_items[0];
+            // std::cout << begin << std::endl;
+            // std::cout << i.value << std::endl;
+            // mypair* ptr = m_items[0];
 
+            return iterator(&m_items[0]);
+        }
+        iterator end() { return iterator(m_items[m_items.size() - 1], m_items); }
+        // std::vector<usu::priority_queue<std::__cxx11::basic_string<char> >::mypair, std::allocator<usu::priority_queue<std::__cxx11::basic_string<char> >::mypair> >&
       private:
         // std::vector<std::pair<T, priority_type>> m_items;
         std::vector<mypair> m_items;
