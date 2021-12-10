@@ -153,165 +153,165 @@ TEST(Iterators, Comparisons)
     EXPECT_TRUE(pq1.begin() != pq2.begin()) << ".begin() and another .begin() from different priority queue should not be equal";
 }
 
-// TEST(Iterators, Dereferenceable)
-// {
-//     usu::priority_queue<std::string> pq;
+TEST(Iterators, Dereferenceable)
+{
+    usu::priority_queue<std::string> pq;
 
-//     pq.enqueue("a", 1);
+    pq.enqueue("a", 1);
 
-//     auto first = pq.begin();
-//     // -> operator
-//     EXPECT_EQ(first->value, "a");
-//     EXPECT_EQ(first->priority, 1u);
+    auto first = pq.begin();
+    // -> operator
+    EXPECT_EQ(first->value, "a");
+    EXPECT_EQ(first->priority, 1u);
 
-//     // * operator
-//     EXPECT_EQ((*first).value, "a");
-//     EXPECT_EQ((*first).priority, 1u);
-// }
+    // * operator
+    EXPECT_EQ((*first).value, "a");
+    EXPECT_EQ((*first).priority, 1u);
+}
 
-// TEST(Iterators, Incrementable)
-// {
-//     usu::priority_queue<std::string> pq;
+TEST(Iterators, Incrementable)
+{
+    usu::priority_queue<std::string> pq;
 
-//     pq.enqueue("a", 1);
-//     pq.enqueue("b", 2);
-//     pq.enqueue("c", 3);
-//     pq.enqueue("d", 4);
-//     pq.enqueue("e", 5);
+    pq.enqueue("a", 1);
+    pq.enqueue("b", 2);
+    pq.enqueue("c", 3);
+    pq.enqueue("d", 4);
+    pq.enqueue("e", 5);
 
-//     // Pre-increment tests
-//     auto i = pq.begin();
-//     ++i;
-//     EXPECT_FALSE(i == pq.end()) << "i should not be equal to .end()";
-//     EXPECT_FALSE(i == pq.begin()) << "i should not be equal to .begin()";
-//     ++i;
-//     EXPECT_FALSE(i == pq.end()) << "i should not be equal to .end()";
-//     ++i;
-//     EXPECT_FALSE(i == pq.end()) << "i should not be equal to .end()";
-//     ++i;
-//     EXPECT_FALSE(i == pq.end()) << "i should not be equal to .end()";
-//     ++i;
-//     EXPECT_TRUE(i == pq.end()) << "i should be equal to .end()";
+    // Pre-increment tests
+    auto i = pq.begin();
+    ++i;
+    EXPECT_FALSE(i == pq.end()) << "i should not be equal to .end()";
+    EXPECT_FALSE(i == pq.begin()) << "i should not be equal to .begin()";
+    ++i;
+    EXPECT_FALSE(i == pq.end()) << "i should not be equal to .end()";
+    ++i;
+    EXPECT_FALSE(i == pq.end()) << "i should not be equal to .end()";
+    ++i;
+    EXPECT_FALSE(i == pq.end()) << "i should not be equal to .end()";
+    ++i;
+    EXPECT_TRUE(i == pq.end()) << "i should be equal to .end()";
 
-//     // Post-increment tests
-//     i = pq.begin();
-//     i++;
-//     EXPECT_FALSE(i == pq.end()) << "i should not be equal to .end()";
-//     EXPECT_FALSE(i == pq.begin()) << "i should not be equal to .begin()";
-//     i++;
-//     EXPECT_FALSE(i == pq.end()) << "i should not be equal to .end()";
-//     i++;
-//     EXPECT_FALSE(i == pq.end()) << "i should not be equal to .end()";
-//     i++;
-//     EXPECT_FALSE(i == pq.end()) << "i should not be equal to .end()";
-//     i++;
-//     EXPECT_TRUE(i == pq.end()) << "i should be equal to .end()";
-// }
+    // Post-increment tests
+    i = pq.begin();
+    i++;
+    EXPECT_FALSE(i == pq.end()) << "i should not be equal to .end()";
+    EXPECT_FALSE(i == pq.begin()) << "i should not be equal to .begin()";
+    i++;
+    EXPECT_FALSE(i == pq.end()) << "i should not be equal to .end()";
+    i++;
+    EXPECT_FALSE(i == pq.end()) << "i should not be equal to .end()";
+    i++;
+    EXPECT_FALSE(i == pq.end()) << "i should not be equal to .end()";
+    i++;
+    EXPECT_TRUE(i == pq.end()) << "i should be equal to .end()";
+}
 
-// TEST(Iterators, ConstructableAssignable)
-// {
-//     usu::priority_queue<std::string> pq;
+TEST(Iterators, ConstructableAssignable)
+{
+    usu::priority_queue<std::string> pq;
 
-//     pq.enqueue("a", 1);
-//     pq.enqueue("b", 2);
-//     pq.enqueue("c", 3);
-//     pq.enqueue("d", 4);
-//     pq.enqueue("e", 5);
+    pq.enqueue("a", 1);
+    pq.enqueue("b", 2);
+    pq.enqueue("c", 3);
+    pq.enqueue("d", 4);
+    pq.enqueue("e", 5);
 
-//     // Copy constructor/assignment
-//     {
-//         auto i1 = pq.begin();                          // copy constructor
-//         usu::priority_queue<std::string>::iterator i2; // default constructor
-//         i2 = i1;                                       // copy assignment;
-//         auto i3 = i1;                                  // copy constructor
+    // Copy constructor/assignment
+    {
+        auto i1 = pq.begin();                          // copy constructor
+        usu::priority_queue<std::string>::iterator i2; // default constructor
+        i2 = i1;                                       // copy assignment;
+        auto i3 = i1;                                  // copy constructor
 
-//         EXPECT_EQ((*i1).value, (*i2).value) << "i1 and i2 should be equal";
-//         EXPECT_EQ((*i1).priority, (*i2).priority) << "i1 and i2 should be equal";
+        EXPECT_EQ((*i1).value, (*i2).value) << "i1 and i2 should be equal";
+        EXPECT_EQ((*i1).priority, (*i2).priority) << "i1 and i2 should be equal";
 
-//         EXPECT_EQ((*i1).value, (*i3).value) << "i1 and i3 should be equal";
-//         EXPECT_EQ((*i1).priority, (*i3).priority) << "i1 and i3 should be equal";
+        EXPECT_EQ((*i1).value, (*i3).value) << "i1 and i3 should be equal";
+        EXPECT_EQ((*i1).priority, (*i3).priority) << "i1 and i3 should be equal";
 
-//         EXPECT_EQ((*i2).value, (*i3).value) << "i2 and i3 should be equal";
-//         EXPECT_EQ((*i2).priority, (*i3).priority) << "i2 and i3 should be equal";
+        EXPECT_EQ((*i2).value, (*i3).value) << "i2 and i3 should be equal";
+        EXPECT_EQ((*i2).priority, (*i3).priority) << "i2 and i3 should be equal";
 
-//         i1++;
-//         EXPECT_NE((*i1).value, (*i2).value) << "i1 and i2 should not be equal";
-//         EXPECT_NE((*i1).priority, (*i2).priority) << "i1 and i2 should not be equal";
-//         EXPECT_NE((*i1).value, (*i3).value) << "i1 and i3 should not be equal";
-//         EXPECT_NE((*i1).priority, (*i3).priority) << "i1 and i3 should not be equal";
+        i1++;
+        EXPECT_NE((*i1).value, (*i2).value) << "i1 and i2 should not be equal";
+        EXPECT_NE((*i1).priority, (*i2).priority) << "i1 and i2 should not be equal";
+        EXPECT_NE((*i1).value, (*i3).value) << "i1 and i3 should not be equal";
+        EXPECT_NE((*i1).priority, (*i3).priority) << "i1 and i3 should not be equal";
 
-//         i2++;
-//         EXPECT_EQ((*i1).value, (*i2).value) << "i1 and i2 should be equal";
-//         EXPECT_EQ((*i1).priority, (*i2).priority) << "i1 and i2 should be equal";
-//         EXPECT_NE((*i2).value, (*i3).value) << "i3 and i3 should not be equal";
-//         EXPECT_NE((*i2).priority, (*i3).priority) << "i3 and i3 should not be equal";
-//     }
-//     // Move constructor/assignment
-//     {
-//         auto i1 = std::move(pq.begin());               // move constructor
-//         usu::priority_queue<std::string>::iterator i2; // default constructor
-//         i2 = std::move(i1);                            // move assignment
-//         auto i3 = pq.begin();                          // copy constructor
+        i2++;
+        EXPECT_EQ((*i1).value, (*i2).value) << "i1 and i2 should be equal";
+        EXPECT_EQ((*i1).priority, (*i2).priority) << "i1 and i2 should be equal";
+        EXPECT_NE((*i2).value, (*i3).value) << "i3 and i3 should not be equal";
+        EXPECT_NE((*i2).priority, (*i3).priority) << "i3 and i3 should not be equal";
+    }
+    // Move constructor/assignment
+    {
+        auto i1 = std::move(pq.begin());               // move constructor
+        usu::priority_queue<std::string>::iterator i2; // default constructor
+        i2 = std::move(i1);                            // move assignment
+        auto i3 = pq.begin();                          // copy constructor
 
-//         EXPECT_EQ((*i3).value, (*i2).value) << "i3 and i2 should be equal";
-//         EXPECT_EQ((*i3).priority, (*i2).priority) << "i3 and i2 should be equal";
+        EXPECT_EQ((*i3).value, (*i2).value) << "i3 and i2 should be equal";
+        EXPECT_EQ((*i3).priority, (*i2).priority) << "i3 and i2 should be equal";
 
-//         EXPECT_EQ((*i2).value, (*i3).value) << "i2 and i3 should be equal";
-//         EXPECT_EQ((*i2).priority, (*i3).priority) << "i2 and i3 should be equal";
+        EXPECT_EQ((*i2).value, (*i3).value) << "i2 and i3 should be equal";
+        EXPECT_EQ((*i2).priority, (*i3).priority) << "i2 and i3 should be equal";
 
-//         i2++;
-//         EXPECT_NE((*i2).value, (*i3).value) << "i2 and i3 should not be equal";
-//         EXPECT_NE((*i2).priority, (*i3).priority) << "i2 and i3 should not be equal";
+        i2++;
+        EXPECT_NE((*i2).value, (*i3).value) << "i2 and i3 should not be equal";
+        EXPECT_NE((*i2).priority, (*i3).priority) << "i2 and i3 should not be equal";
 
-//         i3++;
-//         EXPECT_EQ((*i2).value, (*i3).value) << "i2 and i3 should be equal";
-//         EXPECT_EQ((*i2).priority, (*i3).priority) << "i2 and i3 should be equal";
-//     }
-// }
+        i3++;
+        EXPECT_EQ((*i2).value, (*i3).value) << "i2 and i3 should be equal";
+        EXPECT_EQ((*i2).priority, (*i3).priority) << "i2 and i3 should be equal";
+    }
+}
 
-// TEST(Update, UpdateItems)
-// {
-//     usu::priority_queue<std::string> pq;
+TEST(Update, UpdateItems)
+{
+    usu::priority_queue<std::string> pq;
 
-//     pq.enqueue("a", 1);
-//     pq.enqueue("b", 2);
-//     pq.enqueue("c", 3);
-//     pq.enqueue("d", 4);
-//     pq.enqueue("e", 5);
+    pq.enqueue("a", 1);
+    pq.enqueue("b", 2);
+    pq.enqueue("c", 3);
+    pq.enqueue("d", 4);
+    pq.enqueue("e", 5);
 
-//     reportPQ("--- Update Items: after initial add ---", pq);
+    reportPQ("--- Update Items: after initial add ---", pq);
 
-//     {
-//         auto [value, priority] = *pq.begin();
+    {
+        auto [value, priority] = *pq.begin();
 
-//         EXPECT_EQ(value, "e");
-//         EXPECT_EQ(priority, 5u);
-//     }
+        EXPECT_EQ(value, "e");
+        EXPECT_EQ(priority, 5u);
+    }
 
-//     {
-//         pq.update(pq.find("a"), 6);
-//         auto [value, priority] = *pq.begin();
-//         reportPQ("--- Update Items: update a to 6 ---", pq);
+    {
+        pq.update(pq.find("a"), 6);
+        auto [value, priority] = *pq.begin();
+        reportPQ("--- Update Items: update a to 6 ---", pq);
 
-//         EXPECT_EQ(value, "a");
-//         EXPECT_EQ(priority, 6u);
-//     }
+        EXPECT_EQ(value, "a");
+        EXPECT_EQ(priority, 6u);
+    }
 
-//     {
-//         pq.update(pq.find("a"), 2);
-//         auto [value, priority] = *pq.begin();
-//         reportPQ("--- Update Items: update a to 2 ---", pq);
+    {
+        pq.update(pq.find("a"), 2);
+        auto [value, priority] = *pq.begin();
+        reportPQ("--- Update Items: update a to 2 ---", pq);
 
-//         EXPECT_EQ(value, "e");
-//         EXPECT_EQ(priority, 5u);
-//     }
+        EXPECT_EQ(value, "e");
+        EXPECT_EQ(priority, 5u);
+    }
 
-//     {
-//         pq.update(pq.find("e"), 1);
-//         auto [value, priority] = *pq.begin();
-//         reportPQ("--- Update Items: update e to 1 ---", pq);
+    {
+        pq.update(pq.find("e"), 1);
+        auto [value, priority] = *pq.begin();
+        reportPQ("--- Update Items: update e to 1 ---", pq);
 
-//         EXPECT_EQ(value, "d");
-//         EXPECT_EQ(priority, 4u);
-//     }
-// }
+        EXPECT_EQ(value, "d");
+        EXPECT_EQ(priority, 4u);
+    }
+}

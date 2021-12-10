@@ -1,4 +1,5 @@
 #include <iostream>
+#include <memory>
 #include <stdexcept>
 #include <utility>
 #include <vector>
@@ -25,12 +26,15 @@ namespace usu
         };
 
         using pointer = std::vector<mypair>*;
+        using item_ptr = mypair*;
         using reference = mypair&;
-        class iterator
+        class iterator : public std::iterator<std::forward_iterator_tag, priority_queue*>
         {
-            using iterator_category = std::forward_iterator_tag;
 
           public:
+            using iterator_category = std::forward_iterator_tag;
+            // typedef input_iterator_tag iterator_category;
+            // using difference_type = std::ptrdiff_t;
             iterator() :
                 iterator(nullptr) // DefaultConstructable
             {
@@ -52,7 +56,13 @@ namespace usu
             iterator operator++();    // incrementable e.g., ++r
             iterator operator++(int); // incrementable e.g., r++
             reference operator*() { return (*m_data_item)[m_pos]; }
-            pointer operator->() { return m_data_item; }
+            item_ptr operator->()
+            {
+                mypair p = (*m_data_item)[m_pos];
+                mypair* ptr = new mypair(p.value, p.priority);
+                return ptr;
+            }
+            size_type getPosition() { return m_pos; }
 
           private:
             size_type m_pos;
@@ -116,7 +126,11 @@ namespace usu
             return end();
         }
         bool empty() { return m_items.size() == 0; }
-
+        void update(iterator i, priority_type priority)
+        {
+            m_items[i.getPosition()].priority = priority;
+            updatePriority(i.getPosition());
+        }
         size_type size() { return m_items.size(); }
         void debug()
         {
@@ -211,6 +225,20 @@ namespace usu
             m_items[pos1] = m_items[pos2];
             m_items[pos2] = temp;
         }
+        void updatePriority(int pos)
+        {
+            // If it is a big value, push it up
+            // while ((pos > 0) && (Heap[pos].compareTo(Heap[parent(pos)]) > 0)) {
+            while ((pos > 0) && (compareTo(pos, parent(pos))))
+            {
+                swapItems(pos, parent(pos));
+                pos = parent(pos);
+            }
+            // Swap.swap(Heap, pos, parent(pos));
+            // pos = parent(pos);
+            // }
+            siftdown(pos); // If it is little, push down
+        }
     };
     template <typename T, typename P>
     priority_queue<T, P>::priority_queue(const std::initializer_list<std::pair<value_type, priority_type>>& list)
@@ -229,8 +257,8 @@ namespace usu
     template <typename T, typename P>
     priority_queue<T, P>::iterator::iterator(const iterator& obj)
     {
-        this->m_data_item = obj.m_data_item;
-        this->m_pos = obj.m_pos;
+        m_data_item = obj.m_data_item;
+        m_pos = obj.m_pos;
     }
     template <typename T, typename P>
     priority_queue<T, P>::iterator::iterator(iterator&& obj) noexcept
@@ -243,18 +271,20 @@ namespace usu
     template <typename T, typename P>
     typename priority_queue<T, P>::iterator& priority_queue<T, P>::iterator::operator=(const iterator& rhs)
     {
-        this->m_data_item = rhs->m_data_item;
-        this->m_pos = rhs->m_pos;
+        m_data_item = rhs.m_data_item;
+        m_pos = rhs.m_pos;
         return *this;
     }
     template <typename T, typename P>
     typename priority_queue<T, P>::iterator& priority_queue<T, P>::iterator::operator=(iterator&& rhs)
     {
-        if (this != rhs)
-        {
-            std::swap(this->m_data_item, rhs.m_data_item);
-            std::swap(this->m_pos, rhs.m_pos);
-        }
+        // if (this != rhs)
+        // {
+        //     std::swap(this->m_data_item, rhs.m_data_item);
+        //     std::swap(this->m_pos, rhs.m_pos);
+        // }
+        std::swap(m_data_item, rhs.m_data_item);
+        std::swap(m_pos, rhs.m_pos);
         return *this;
     }
     template <typename T, typename P>
