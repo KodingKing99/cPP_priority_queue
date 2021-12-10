@@ -47,8 +47,8 @@ namespace usu
             iterator(iterator&& obj) noexcept;        // CopyConstructable, MoveConstructable
             iterator& operator=(const iterator& rhs); // CopyAssignable
             iterator& operator=(iterator&& rhs);      // CopyAssignable, MoveAssignable
-            bool operator==(const iterator& rhs) { return m_pos == rhs.m_pos; }
-            bool operator!=(const iterator& rhs) { return m_pos != rhs.m_pos; }
+            bool operator==(const iterator& rhs) { return m_pos == rhs.m_pos && m_data_item == rhs.m_data_item; }
+            bool operator!=(const iterator& rhs) { return m_pos != rhs.m_pos || m_data_item != rhs.m_data_item; }
             iterator operator++();    // incrementable e.g., ++r
             iterator operator++(int); // incrementable e.g., r++
             reference operator*() { return (*m_data_item)[m_pos]; }
