@@ -1,3 +1,9 @@
+////////////
+// @author Nick Sorenson A02287085
+// References used:
+// - https://opendsa-server.cs.vt.edu/ODSA/Books/Everything/html/Heaps.html
+// - https://usu.instructure.com/courses/676471/pages/lecture-notes-and-code-samples?module_item_id=4470875
+////////////
 #include <iostream>
 #include <memory>
 #include <stdexcept>
@@ -80,17 +86,18 @@ namespace usu
             //     return;
             // }
             // Change to iterator end here
-            auto curr = m_items.size();
+            auto curr = static_cast<int>(m_items.size());
+            curr = static_cast<int>(curr);
             // Start at end of heap
             // m_items.insert(m_items.end(), std::make_pair(value, priority));
             // mypair* m = new mypair(value, priority);
             m_items.insert(m_items.end(), mypair(value, priority));
 
             // Now sift up until curr's parent's key > curr's key
-            while ((curr != 0) && (compareTo(curr, parent(curr)) > 0))
+            while ((curr != 0) && (compareTo(static_cast<int>(curr), parent(curr))))
             {
-                swapItems(curr, parent(curr));
-                curr = parent(curr);
+                swapItems(static_cast<int>(curr), parent(curr));
+                curr = static_cast<int>(parent(curr));
             }
             // debug();
         };
@@ -103,7 +110,7 @@ namespace usu
             }
             // std::cout << "Deqeueing" << std::endl;
             // Swap maximum with last value
-            swapItems(0, m_items.size() - 1);
+            swapItems(0, static_cast<int>(m_items.size() - 1));
             // std::cout << "after swap " << std::endl;
             // debug();
             auto returnPair = m_items[m_items.size() - 1];
@@ -129,7 +136,7 @@ namespace usu
         void update(iterator i, priority_type priority)
         {
             m_items[i.getPosition()].priority = priority;
-            updatePriority(i.getPosition());
+            updatePriority(static_cast<int>(i.getPosition()));
         }
         size_type size() { return m_items.size(); }
         void debug()
