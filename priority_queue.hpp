@@ -24,7 +24,7 @@ namespace usu
             priority_type priority;
         };
 
-        using pointer = mypair*;
+        using pointer = std::vector<mypair>*;
         using reference = mypair&;
         class iterator
         {
@@ -51,7 +51,7 @@ namespace usu
             bool operator!=(const iterator& rhs) { return m_pos != rhs.m_pos; }
             iterator operator++();    // incrementable e.g., ++r
             iterator operator++(int); // incrementable e.g., r++
-            reference operator*() { return m_data_item[m_pos]; }
+            reference operator*() { return (*m_data_item)[m_pos]; }
             pointer operator->() { return m_data_item; }
 
           private:
@@ -85,7 +85,7 @@ namespace usu
             debug();
         };
         // std::pair<T, priority_type> deqeue()
-        mypair deqeue()
+        mypair dequeue()
         {
             if (m_items.size() == 0)
             { // removing from empty heap
@@ -94,10 +94,26 @@ namespace usu
             std::cout << "Deqeueing" << std::endl;
             // Swap maximum with last value
             swapItems(0, m_items.size() - 1);
-            siftdown(0); // put new root in correct place
+            std::cout << "after swap " << std::endl;
+            debug();
             auto returnPair = m_items[m_items.size() - 1];
             m_items.resize(m_items.size() - 1); // truncate array
-            return returnPair;                  // return the pair that was at the end of the array;
+            siftdown(0);                        // put new root in correct place
+            std::cout << "returning max value pair: ( " << returnPair.value << " , " << returnPair.priority << " ) " << std::endl;
+            return returnPair; // return the pair that was at the end of the array;
+        }
+        iterator find(T value)
+        {
+            for (auto i = begin(); i != end(); ++i)
+            {
+                // std::cout << "in counted for loop" << (*i).value << std::endl;
+                if ((*i).value == value)
+                {
+                    std::cout << "found the value " << (*i).value << std::endl;
+                    return i;
+                }
+            }
+            return end();
         }
         bool empty() { return m_items.size() == 0; }
 
@@ -112,15 +128,9 @@ namespace usu
         }
         iterator begin()
         {
-            // auto i = m_items.begin();
-            // auto begin = m_items[0];
-            // std::cout << begin << std::endl;
-            // std::cout << i.value << std::endl;
-            // mypair* ptr = m_items[0];
-
-            return iterator(&m_items[0]);
+            return iterator(&m_items);
         }
-        iterator end() { return iterator(m_items[m_items.size() - 1], m_items); }
+        iterator end() { return iterator(m_items.size(), &m_items); }
         // std::vector<usu::priority_queue<std::__cxx11::basic_string<char> >::mypair, std::allocator<usu::priority_queue<std::__cxx11::basic_string<char> >::mypair> >&
       private:
         // std::vector<std::pair<T, priority_type>> m_items;
@@ -219,16 +229,16 @@ namespace usu
     template <typename T, typename P>
     priority_queue<T, P>::iterator::iterator(const iterator& obj)
     {
-        this->m_data_item = obj->m_data_item;
-        this->m_pos = obj->m_pos;
+        this->m_data_item = obj.m_data_item;
+        this->m_pos = obj.m_pos;
     }
     template <typename T, typename P>
     priority_queue<T, P>::iterator::iterator(iterator&& obj) noexcept
     {
-        this->m_data_item = obj->m_data_item;
-        this->m_pos = obj->m_pos;
-        obj->m_data_item = nullptr;
-        obj->m_pos = 0;
+        m_data_item = obj.m_data_item;
+        m_pos = obj.m_pos;
+        obj.m_data_item = nullptr;
+        obj.m_pos = 0;
     }
     template <typename T, typename P>
     typename priority_queue<T, P>::iterator& priority_queue<T, P>::iterator::operator=(const iterator& rhs)
@@ -251,6 +261,8 @@ namespace usu
     typename priority_queue<T, P>::iterator priority_queue<T, P>::iterator::operator++()
     {
         m_pos++;
+
+        // m_pos = rightchild(m_pos);
         return *this;
     }
     template <typename T, typename P>

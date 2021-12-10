@@ -41,117 +41,117 @@ TEST(MemberMethods, AddItems)
     EXPECT_EQ(pq.size(), 1);
     EXPECT_EQ(pq.empty(), false);
     EXPECT_EQ((*pq.begin()).value, "a");
-    // EXPECT_EQ((*pq.begin()).second, 1u);
+    EXPECT_EQ((*pq.begin()).priority, 1u);
 
-    //     pq.enqueue("b", 2);
-    //     EXPECT_EQ(pq.size(), 2);
-    //     EXPECT_EQ(pq.empty(), false);
-    //     EXPECT_EQ((*pq.begin()).value, "b");
-    //     EXPECT_EQ((*pq.begin()).priority, 2u);
+    pq.enqueue("b", 2);
+    EXPECT_EQ(pq.size(), 2);
+    EXPECT_EQ(pq.empty(), false);
+    EXPECT_EQ((*pq.begin()).value, "b");
+    EXPECT_EQ((*pq.begin()).priority, 2u);
 
-    //     pq.enqueue("c", 3);
-    //     EXPECT_EQ(pq.size(), 3);
-    //     EXPECT_EQ(pq.empty(), false);
-    //     EXPECT_EQ((*pq.begin()).value, "c");
-    //     EXPECT_EQ((*pq.begin()).priority, 3u);
+    pq.enqueue("c", 3);
+    EXPECT_EQ(pq.size(), 3);
+    EXPECT_EQ(pq.empty(), false);
+    EXPECT_EQ((*pq.begin()).value, "c");
+    EXPECT_EQ((*pq.begin()).priority, 3u);
 
-    //     pq.enqueue("d", 1);
-    //     EXPECT_EQ(pq.size(), 4);
-    //     EXPECT_EQ(pq.empty(), false);
-    //     EXPECT_EQ((*pq.begin()).value, "c");
-    //     EXPECT_EQ((*pq.begin()).priority, 3u);
+    pq.enqueue("d", 1);
+    EXPECT_EQ(pq.size(), 4);
+    EXPECT_EQ(pq.empty(), false);
+    EXPECT_EQ((*pq.begin()).value, "c");
+    EXPECT_EQ((*pq.begin()).priority, 3u);
 
-    //     pq.enqueue("e", 4);
-    //     EXPECT_EQ(pq.size(), 5);
-    //     EXPECT_EQ(pq.empty(), false);
-    //     EXPECT_EQ((*pq.begin()).value, "e");
-    //     EXPECT_EQ((*pq.begin()).priority, 4u);
+    pq.enqueue("e", 4);
+    EXPECT_EQ(pq.size(), 5);
+    EXPECT_EQ(pq.empty(), false);
+    EXPECT_EQ((*pq.begin()).value, "e");
+    EXPECT_EQ((*pq.begin()).priority, 4u);
 
-    //     pq.enqueue("f", 2);
-    //     EXPECT_EQ(pq.size(), 6);
-    //     EXPECT_EQ(pq.empty(), false);
-    //     EXPECT_EQ((*pq.begin()).value, "e");
-    //     EXPECT_EQ((*pq.begin()).priority, 4u);
+    pq.enqueue("f", 2);
+    EXPECT_EQ(pq.size(), 6);
+    EXPECT_EQ(pq.empty(), false);
+    EXPECT_EQ((*pq.begin()).value, "e");
+    EXPECT_EQ((*pq.begin()).priority, 4u);
 
-    //     reportPQ("--- After Add Items ---", pq);
+    reportPQ("--- After Add Items ---", pq);
 }
 
-// TEST(MemberMethods, Misc)
-// {
-//     usu::priority_queue<std::string> pq;
+TEST(MemberMethods, Misc)
+{
+    usu::priority_queue<std::string> pq;
 
-//     EXPECT_TRUE(pq.empty());
-//     EXPECT_TRUE(pq.find("a") == pq.end());
+    EXPECT_TRUE(pq.empty());
+    EXPECT_TRUE(pq.find("a") == pq.end());
 
-//     pq.enqueue("a", 1);
-//     EXPECT_TRUE(pq.find("a") == pq.begin());
-//     EXPECT_EQ((*pq.find("a")).value, "a");
-//     EXPECT_EQ((*pq.find("a")).priority, 1u);
+    pq.enqueue("a", 1);
+    EXPECT_TRUE(pq.find("a") == pq.begin());
+    EXPECT_EQ((*pq.find("a")).value, "a");
+    EXPECT_EQ((*pq.find("a")).priority, 1u);
 
-//     pq.enqueue("b", 2);
-//     EXPECT_TRUE(pq.find("a") != pq.begin());
-//     EXPECT_EQ((*pq.find("a")).value, "a");
-//     EXPECT_EQ((*pq.find("a")).priority, 1u);
+    pq.enqueue("b", 2);
+    EXPECT_TRUE(pq.find("a") != pq.begin());
+    EXPECT_EQ((*pq.find("a")).value, "a");
+    EXPECT_EQ((*pq.find("a")).priority, 1u);
 
-//     EXPECT_TRUE(pq.find("b") == pq.begin());
-//     EXPECT_EQ((*pq.find("b")).value, "b");
-//     EXPECT_EQ((*pq.find("b")).priority, 2u);
+    EXPECT_TRUE(pq.find("b") == pq.begin());
+    EXPECT_EQ((*pq.find("b")).value, "b");
+    EXPECT_EQ((*pq.find("b")).priority, 2u);
 
-//     auto top = pq.dequeue();
-//     EXPECT_EQ(top.value, "b");
-//     EXPECT_EQ(top.priority, 2u);
+    auto top = pq.dequeue();
+    EXPECT_EQ(top.value, "b");
+    EXPECT_EQ(top.priority, 2u);
 
-//     EXPECT_TRUE(pq.find("a") == pq.begin());
-//     EXPECT_EQ((*pq.find("a")).value, "a");
-//     EXPECT_EQ((*pq.find("a")).priority, 1u);
+    EXPECT_TRUE(pq.find("a") == pq.begin());
+    EXPECT_EQ((*pq.find("a")).value, "a");
+    EXPECT_EQ((*pq.find("a")).priority, 1u);
 
-//     pq.dequeue();
-//     EXPECT_TRUE(pq.empty());
-//     EXPECT_TRUE(pq.find("a") == pq.end());
-//     EXPECT_TRUE(pq.find("b") == pq.end());
+    pq.dequeue();
+    EXPECT_TRUE(pq.empty());
+    EXPECT_TRUE(pq.find("a") == pq.end());
+    EXPECT_TRUE(pq.find("b") == pq.end());
 
-//     try
-//     {
-//         pq.dequeue();
-//         EXPECT_TRUE(false) << "Did not throw an exception on empty queue";
-//     }
-//     catch (...) // Using ... to prevent a polymorphic warning from g++
-//     {
-//         EXPECT_TRUE(true);
-//     }
-// }
+    try
+    {
+        pq.dequeue();
+        EXPECT_TRUE(false) << "Did not throw an exception on empty queue";
+    }
+    catch (...) // Using ... to prevent a polymorphic warning from g++
+    {
+        EXPECT_TRUE(true);
+    }
+}
 
-// TEST(Iterators, BeginEnd)
-// {
-//     usu::priority_queue<std::string> pq;
+TEST(Iterators, BeginEnd)
+{
+    usu::priority_queue<std::string> pq;
 
-//     EXPECT_TRUE(pq.begin() == pq.end()) << ".begin() and .end() on empty collection should be equal";
+    EXPECT_TRUE(pq.begin() == pq.end()) << ".begin() and .end() on empty collection should be equal";
 
-//     pq.enqueue("a", 1);
-//     pq.enqueue("b", 2);
-//     pq.enqueue("c", 3);
-//     pq.enqueue("d", 4);
-//     pq.enqueue("e", 5);
+    pq.enqueue("a", 1);
+    pq.enqueue("b", 2);
+    pq.enqueue("c", 3);
+    pq.enqueue("d", 4);
+    pq.enqueue("e", 5);
 
-//     EXPECT_TRUE(pq.begin() == pq.begin()) << ".begin() and another .begin() should be equal";
-//     EXPECT_FALSE(pq.begin() == pq.end()) << ".begin() and .end() should not be equal on a non-empty collection (equality operator)";
-//     EXPECT_TRUE(pq.begin() != pq.end()) << ".begin() and .end() should not be equal on a non-empty collection (inequality operator)";
-// }
+    EXPECT_TRUE(pq.begin() == pq.begin()) << ".begin() and another .begin() should be equal";
+    EXPECT_FALSE(pq.begin() == pq.end()) << ".begin() and .end() should not be equal on a non-empty collection (equality operator)";
+    EXPECT_TRUE(pq.begin() != pq.end()) << ".begin() and .end() should not be equal on a non-empty collection (inequality operator)";
+}
 
-// TEST(Iterators, Comparisons)
-// {
-//     usu::priority_queue<std::string> pq1;
-//     usu::priority_queue<std::string> pq2;
+TEST(Iterators, Comparisons)
+{
+    usu::priority_queue<std::string> pq1;
+    usu::priority_queue<std::string> pq2;
 
-//     pq1.enqueue("a", 1);
-//     pq2.enqueue("a", 1);
+    pq1.enqueue("a", 1);
+    pq2.enqueue("a", 1);
 
-//     EXPECT_TRUE(pq1.begin() == pq1.begin()) << ".begin() and another .begin() from same priority queue should be equal";
-//     EXPECT_TRUE(pq2.begin() == pq2.begin()) << ".begin() and another .begin() from same priority queue should be equal";
+    EXPECT_TRUE(pq1.begin() == pq1.begin()) << ".begin() and another .begin() from same priority queue should be equal";
+    EXPECT_TRUE(pq2.begin() == pq2.begin()) << ".begin() and another .begin() from same priority queue should be equal";
 
-//     EXPECT_FALSE(pq1.begin() == pq2.begin()) << ".begin() and another .begin() from different priority queue should not be equal";
-//     EXPECT_TRUE(pq1.begin() != pq2.begin()) << ".begin() and another .begin() from different priority queue should not be equal";
-// }
+    EXPECT_FALSE(pq1.begin() == pq2.begin()) << ".begin() and another .begin() from different priority queue should not be equal";
+    EXPECT_TRUE(pq1.begin() != pq2.begin()) << ".begin() and another .begin() from different priority queue should not be equal";
+}
 
 // TEST(Iterators, Dereferenceable)
 // {
